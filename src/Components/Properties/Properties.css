@@ -1,5 +1,0 @@
-.wrapper-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 30rem);
-    justify-content: center;
-  }
