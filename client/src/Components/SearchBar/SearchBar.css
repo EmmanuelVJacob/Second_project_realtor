@@ -1,0 +1,38 @@
+.search-bar{
+    background-color: white;
+    border-radius: 5px;
+    border: 3px solid rgba(120,120,120,0.12);
+    padding: 0 0.3rem 0.1rem;
+    justify-content: space-between;
+    width: 100%;
+}
+.search-bar>input{
+    border: none;
+    outline: none;
+    width: 80%;
+    padding-left: 0.5rem;
+}
+.search-icon{
+    font-size: 2rem;
+}
+
+@media (max-width:640px){
+    .search-bar>button{
+        width: 10%;
+        font-size: 1rem;
+        height: 2rem;
+    }
+    .search-icon{
+        margin-top: -2rem;
+        font-size: 1.5rem;
+    }
+    .search-bar>input{
+        width: 70%;
+    }
+    .search-icon{
+        margin-left: -.9rem;
+    }
+   
+    
+
+}
