@@ -8,6 +8,7 @@ import AllProperties from "./Screens/AllProperties/AllProperties";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {ReactQueryDevtools} from 'react-query/devtools'
+import Agent from "./Screens/Agent";
 
 function App() {
   const [userDetails, setUserDetails] = useState([]);
@@ -35,6 +36,21 @@ function App() {
             </QueryClientProvider>
           </UserContext.Provider>
         </Auth0Provider>
+        <Auth0Provider
+        domain="dev-fncui3kebcve1zgy.us.auth0.com"
+        clientId="82myjUtFXChnRmPVgdxWjPgCDL6usDjo"
+        authorizationParams={{
+          redirect_uri: "http://localhost:5173/agent",
+        }}
+        audience="http://localhost:8000"
+        scope="openid profile email"
+      >
+        <QueryClientProvider client={new QueryClient()}>
+          <Routes>
+            <Route path="/agent" element={<Agent />} />
+          </Routes>
+        </QueryClientProvider>
+      </Auth0Provider>
       <ToastContainer/>
     </BrowserRouter>
   );
