@@ -1,12 +1,12 @@
 import React, {  useEffect, useState } from "react";
 import "./AgentHeader.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import UserMenu from "../UserMenu/UserMenu";
 import { useMutation } from "react-query";
 import { createAgent} from "../../utils/Api";
 import { Link, NavLink } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
+import AgentMenu from "../AgentMenu/AgentMenu";
 const AgentHeader = () => {
   const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   const { mutate } = useMutation({
@@ -27,7 +27,7 @@ const AgentHeader = () => {
   };
 
   return (
-    <section className="h-wrapper">
+    <section className="h-wrapper1">
       <div className="flexCenter paddings innerWidth h-container">
         <Link to="/">
           <img src="./logo-1.png" alt="logo image" className="icon" />
@@ -45,7 +45,7 @@ const AgentHeader = () => {
               <a href=""> login</a>
             </button>
           ) : (
-            <UserMenu user={user} logout={logout} />
+            <AgentMenu user={user} logout={logout} />
           )}
         </div>
         </OutsideClickHandler>

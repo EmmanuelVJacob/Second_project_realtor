@@ -1,23 +1,52 @@
 import asyncHandler from "express-async-handler";
 import { prisma } from "../config/prismaConfig.js";
+import bcrypt from "bcryptjs";
 export const createUser = asyncHandler(async (req, res) => {
+  let { email, password, name } = req.body;
 
-  let { user } = req.body;
-  let email = user?.email
   try {
-  const userExits = await prisma.User.findUnique({ where: { email } });
-  if (!userExits) {
-    const user1 = await prisma.User.create({ data: {email:user?.email,name:user?.name,image:user?.picture,} });
-    res.status(201).send({
-      message: "User Created Successfully",
-     user1
-    });
-  } else {
-    res.status(200).send({ message: "user already registered" });
+    const userExits = await prisma.User.findUnique({ where: { email } });
+    if (!userExits) {
+      const saltRounds = 5;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const strPassword = password.toString()
+      const passwordHash = await bcrypt.hash(strPassword, salt);
+
+      const user1 = await prisma.User.create({
+        data: { email, password: passwordHash, name },
+      });
+      res.status(201).send({
+        message: "User Created Successfully",
+        user1,
+      });
+    } else {
+      res.status(200).send({ message: "user already registered" });
+    }
+  } catch (error) {
+    throw new Error(error.message);
   }
- } catch (error) {
-  throw new Error(error.message)
- }
+});
+
+export const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await prisma.User.findUnique({ where: { email } });
+    if (!user) {
+      res.status(404).send({message:"no user found"})
+      
+    }
+
+    const strPassword = password.toString()
+    const passwordMatch = await bcrypt.compare(strPassword, user.password);
+
+    if (passwordMatch) {
+      res.status(200).send({message:"user successfully logged in"})
+    } else {
+      res.status(404).send({message:"incorrect password"})
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
 });
 
 export const bookProperty = asyncHandler(async (req, res) => {
@@ -138,15 +167,15 @@ export const favourites = asyncHandler(async (req, res) => {
   }
 });
 
-export const allFavourites = asyncHandler(async(req,res)=>{
-  const {id} = req.body
+export const allFavourites = asyncHandler(async (req, res) => {
+  const { id } = req.body;
   try {
     const favourites = await prisma.User.findUnique({
-      where:{id},
-      select:{favouriteProperties:true}
-    })
-    res.status(200).send({favourites})
+      where: { id },
+      select: { favouriteProperties: true },
+    });
+    res.status(200).send({ favourites });
   } catch (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
-})
+});

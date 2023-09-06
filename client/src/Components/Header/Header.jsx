@@ -9,17 +9,24 @@ import { Link, NavLink } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
 const Header = () => {
-  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user, logout,getAccessTokenSilently } = useAuth0();
   const { setUserDetails } = useContext(UserContext);
   const { mutate } = useMutation({
     mutationKey: [user?.email],
-    mutationFn: () => createUser(user),
+    mutationFn: (token) => createUser(user,token),
   });
   const [menuOpened, setMenuOpened] = useState(false);
   useEffect(() => {
-    console.log(user, "user object"); // Add this line
+    const getTokenAndRegister = async()=>{
+      const res = await getAccessTokenSilently();
+      console.log(res)
+      localStorage.setItem("access_token",res)
+      setUserDetails((prev)=>({...prev,token:res}))
+      mutate(res)
+    }
     if (isAuthenticated && user?.email) {
-      mutate();
+      getTokenAndRegister()
+
     }
   }, [isAuthenticated, user, mutate]);
   const getMenuStype = (menuOpened) => {
@@ -39,17 +46,20 @@ const Header = () => {
             setMenuOpened(false);
           }}
         >
-        <div className="flexCenter h-menu" style={getMenuStype(menuOpened)}>
-          <NavLink to="/properties">All Properties</NavLink>
+          <div className="flexCenter h-menu" style={getMenuStype(menuOpened)}>
+            <NavLink to="/properties">All Properties</NavLink>
+            <NavLink to="/agent" target="_blank">
+              <u>login as agent?</u>
+            </NavLink>
 
-          {!isAuthenticated ? (
-            <button className="button" onClick={loginWithRedirect}>
-              <a href=""> login</a>
-            </button>
-          ) : (
-            <UserMenu user={user} logout={logout} />
-          )}
-        </div>
+            {!isAuthenticated ? (
+              <button className="button" onClick={loginWithRedirect}>
+                <a href=""> login</a>
+              </button>
+            ) : (
+              <UserMenu user={user} logout={logout} />
+            )}
+          </div>
         </OutsideClickHandler>
         <div
           className="menu-icon"

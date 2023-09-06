@@ -58,7 +58,10 @@ export const createProperty = asyncHandler(async (req, res) => {
 });
 
 export const getAllProperties = asyncHandler(async(req,res)=>{
+console.log('Request Headers properties:', req.headers);
+
   try {
+    
     const allProperties = await prisma.properties.findMany()
     res.status(200).send(allProperties)
     

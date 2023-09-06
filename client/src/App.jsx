@@ -8,10 +8,16 @@ import AllProperties from "./Screens/AllProperties/AllProperties";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {ReactQueryDevtools} from 'react-query/devtools'
-import Agent from "./Screens/Agent";
+import AgentScreen from "./Screens/AgentScreen";
+import AgentContext from "./Context/AgentContext";
 
 function App() {
   const [userDetails, setUserDetails] = useState([]);
+  const [agentDetails,setAgentDetails] = useState({
+    favourites:[],
+    bookings:[],
+    token:null
+  })
   const queryClient = new QueryClient();
   return (
     <BrowserRouter>
@@ -45,11 +51,14 @@ function App() {
         audience="http://localhost:8000"
         scope="openid profile email"
       >
+        <AgentContext.Provider value={{agentDetails,setAgentDetails}}>
+
         <QueryClientProvider client={new QueryClient()}>
           <Routes>
-            <Route path="/agent" element={<Agent />} />
+            <Route path="/agent" element={<AgentScreen />} />
           </Routes>
         </QueryClientProvider>
+        </AgentContext.Provider>
       </Auth0Provider>
       <ToastContainer/>
     </BrowserRouter>

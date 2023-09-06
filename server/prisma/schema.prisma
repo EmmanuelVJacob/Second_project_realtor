@@ -9,9 +9,10 @@ datasource db {
 
 model User {
     id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-    name                String?
+    name                String
     email               String   @unique
-    phone               Int?     
+    password            String
+    phone               Int?
     image               String?
     bookedVisits        Json[]
     favouriteProperties String[] @db.ObjectId
@@ -25,7 +26,7 @@ model Agent {
     id              String       @id @default(auto()) @map("_id") @db.ObjectId
     name            String
     email           String       @unique
-    phone           Int          
+    phone           Int
     image           String?
     bookedVisits    Json[]
     address         String?
@@ -52,12 +53,11 @@ model Properties {
     buildingProgress String
     bathroom         Int
     soldStatus       Boolean
-    userEmail        String   
+    userEmail        String
     nearProperties   String[] @db.ObjectId
     owner            Agent    @relation("owner", fields: [userEmail], references: [email])
     createdAt        DateTime @default(now())
     updatedAt        DateTime @updatedAt
+
     @@unique(fields: [address, userEmail])
 }
-
-

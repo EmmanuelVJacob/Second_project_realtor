@@ -1,7 +1,7 @@
 import React from 'react'
 import AgentHeader from '../Components/AgentHeader/AgentHeader'
 
-const Agent = () => {
+const AgentScreen = () => {
   return (
     <div>
         <AgentHeader/>
@@ -10,4 +10,4 @@ const Agent = () => {
   )
 }
 
-export default Agent
+export default AgentScreen
