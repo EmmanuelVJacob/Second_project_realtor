@@ -1,38 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Header.css";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import UserMenu from "../UserMenu/UserMenu";
-import { UserContext } from "../../Context/userContext";
-import { useMutation } from "react-query";
-import { createUser } from "../../utils/Api";
+
 import { Link, NavLink } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useSelector } from "react-redux";
+import { logout, selectUser } from "../../Features/UserSlice";
+import { useDispatch } from "react-redux";
 const Header = () => {
-  const { loginWithRedirect, isAuthenticated, user, logout,getAccessTokenSilently } = useAuth0();
-  const { setUserDetails } = useContext(UserContext);
-  const { mutate } = useMutation({
-    mutationKey: [user?.email],
-    mutationFn: (token) => createUser(user,token),
-  });
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  console.log(user?.name);
   const [menuOpened, setMenuOpened] = useState(false);
-  useEffect(() => {
-    const getTokenAndRegister = async()=>{
-      const res = await getAccessTokenSilently();
-      console.log(res)
-      localStorage.setItem("access_token",res)
-      setUserDetails((prev)=>({...prev,token:res}))
-      mutate(res)
-    }
-    if (isAuthenticated && user?.email) {
-      getTokenAndRegister()
 
-    }
-  }, [isAuthenticated, user, mutate]);
   const getMenuStype = (menuOpened) => {
     if (document.documentElement.clientWidth <= 800) {
       return { right: !menuOpened && "-100%" };
     }
+  };
+  const handleLogout = (e) => {
+    dispatch(logout());
   };
 
   return (
@@ -48,19 +37,28 @@ const Header = () => {
         >
           <div className="flexCenter h-menu" style={getMenuStype(menuOpened)}>
             <NavLink to="/properties">All Properties</NavLink>
-            <NavLink to="/agent" target="_blank">
-              <u>login as agent?</u>
-            </NavLink>
+            {user?.loggedin ? (
+              <>
+                <NavLink to="/agent" target="_blank">
+                  <u>{user?.name}</u>
+                </NavLink>
 
-            {!isAuthenticated ? (
-            <NavLink to="/login">
-              <button className="button" >
-                <a href=""> login</a>
-              </button>
-            </NavLink>
-                
+                <NavLink>
+                  <button onClick={(e) => handleLogout(e)} className="button">
+                    logout
+                  </button>
+                </NavLink>
+              </>
             ) : (
-              <UserMenu user={user} logout={logout} />
+              <>
+                <NavLink to="/agent" target="_blank">
+                  <u>login as agent?</u>
+                </NavLink>
+
+                <NavLink to="/login">
+                  <button className="button">login</button>
+                </NavLink>
+              </>
             )}
           </div>
         </OutsideClickHandler>

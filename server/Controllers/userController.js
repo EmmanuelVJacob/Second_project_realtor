@@ -3,7 +3,7 @@ import { prisma } from "../config/prismaConfig.js";
 import bcrypt from "bcryptjs";
 export const createUser = asyncHandler(async (req, res) => {
   let { email, password, name } = req.body;
-
+  console.log(req.body,'sdkjfslkjf')
   try {
     const userExits = await prisma.User.findUnique({ where: { email } });
     if (!userExits) {

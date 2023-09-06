@@ -20,17 +20,16 @@ export const getAllProperties = async () => {
   }
 };
 
-export const createUser = async (user, token) => {
+export const createUser = async ({name,email,password}) => {
+
   try {
-    await api.post(
-      "/user/register",
-      { user },
-      {
-        headers: {
-          Authorization: `${token}`,
-        },
-      }
-    );
+   const newuser =  await api.post("/user/register", { name,email,password })
+   if(newuser.data.user1){
+
+     return newuser.data.user1
+   }else{
+    toast.error(newuser.data.message)
+   }
   } catch (error) {
     toast.error("something went wrong");
     throw error;

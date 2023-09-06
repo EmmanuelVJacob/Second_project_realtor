@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 
 
 const LoginUser = () => {
+   
   return (
     <div className="wrapper flexCenter">
       <div className="container flexColCenter paddings">
@@ -15,8 +16,8 @@ const LoginUser = () => {
        <input type="text" placeholder="   username.." />
         <input type="password" name="" id="" placeholder="  password.." />
        </div>
-        <button className="button"> login</button>
-        <p className="secondaryText"> Not a member ? <Link to="/signup"><u>sign Up</u></Link> </p>
+        <button  className="button"> login</button>
+        <p className="secondaryText"> Not a member ? <NavLink to="/signup"><u>sign Up</u></NavLink> </p>
       </div>
     </div>
   );

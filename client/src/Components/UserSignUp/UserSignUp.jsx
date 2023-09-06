@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './UserSignUp.css'
 import { Link, NavLink } from "react-router-dom";
+import { createUser } from "../../utils/Api";
+import { useDispatch } from 'react-redux';
+import { login } from '../../Features/UserSlice';
 
 
 const UserSignUp = () => {
+    const [userName,setUserName] = useState('')
+    const [password,setPassword]= useState('')
+    const [confirmPass,setConfirmPass] = useState('')
+    const [email,setEmail] = useState('')
+    const dispatch = useDispatch()
+    const handleSubmit = async()=>{
+        let newUser = await createUser({name:userName,email,password})
+        dispatch(login({
+            name:newUser.name,
+            email:newUser.email,
+            password:newUser.password,
+            loggedin:true
+        } ))
+       }
+      
   return (
     <>
     <div className="wrapper flexCenter">
@@ -13,13 +31,13 @@ const UserSignUp = () => {
         <h1 className="primaryText">Sign Up</h1>
        </div>
        <div className="cred flexColCenter">
-       <input type="text" placeholder="   username.." />
-        <input type="password" name="" id="" placeholder="  password.." />
-        <input type="password" placeholder='confirm password...' />
-        <input type="email" name="" id="" placeholder='email...' />
+       <input type="text" value={userName} onChange={(e)=>setUserName(e.target.value)} placeholder="   username.." />
+        <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password"  placeholder="  password.." />
+        <input value={confirmPass} onChange={(e)=>setConfirmPass(e.target.value)} type="password" placeholder='confirm password...' />
+        <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" placeholder='email...' />
        </div>
-        <button className="button" style={{margin:"1rem"}}> Sing Up</button>
-        <p className="secondaryText"> already a member ? <Link to="/login"><u>log in</u></Link> </p>
+        <button onClick={handleSubmit} className="button" style={{margin:"1rem"}}> Sing Up</button>
+        <p className="secondaryText"> already a member ? <NavLink to="/login"><u>log in</u></NavLink> </p>
       </div>
     </div>
     </>
