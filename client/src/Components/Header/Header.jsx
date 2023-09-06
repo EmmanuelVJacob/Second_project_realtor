@@ -53,9 +53,12 @@ const Header = () => {
             </NavLink>
 
             {!isAuthenticated ? (
-              <button className="button" onClick={loginWithRedirect}>
+            <NavLink to="/login">
+              <button className="button" >
                 <a href=""> login</a>
               </button>
+            </NavLink>
+                
             ) : (
               <UserMenu user={user} logout={logout} />
             )}

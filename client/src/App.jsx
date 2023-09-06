@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import {ReactQueryDevtools} from 'react-query/devtools'
 import AgentScreen from "./Screens/AgentScreen";
 import AgentContext from "./Context/AgentContext";
+import UserLogin from "./Screens/UserLoginScreen/UserLogin";
+import UserSignUpScreen from "./Screens/UserSignUpScreen/UserSignUpScreen";
 
 function App() {
   const [userDetails, setUserDetails] = useState([]);
@@ -35,6 +37,8 @@ function App() {
               <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                   <Route path="/" element={<UserScreen />} />
+                  <Route path="/login" element={<UserLogin/>}/>
+                  <Route path="/signup" element={<UserSignUpScreen/>}/>
                   <Route path="/properties" element={<AllProperties />} />
                 </Routes>
               </Suspense>
