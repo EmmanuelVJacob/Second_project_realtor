@@ -3,7 +3,6 @@ import { prisma } from "../config/prismaConfig.js";
 import bcrypt from "bcryptjs";
 export const createUser = asyncHandler(async (req, res) => {
   let { email, password, name } = req.body;
-  console.log(req.body,'sdkjfslkjf')
   try {
     const userExits = await prisma.User.findUnique({ where: { email } });
     if (!userExits) {
@@ -32,17 +31,15 @@ export const loginUser = asyncHandler(async (req, res) => {
   try {
     const user = await prisma.User.findUnique({ where: { email } });
     if (!user) {
-      res.status(404).send({message:"no user found"})
+      res.status(200).send({message:"no user found"})
       
     }
-
     const strPassword = password.toString()
     const passwordMatch = await bcrypt.compare(strPassword, user.password);
-
     if (passwordMatch) {
-      res.status(200).send({message:"user successfully logged in"})
+      res.status(200).send({message:"user successfully logged in",user})
     } else {
-      res.status(404).send({message:"incorrect password"})
+      res.status(200).send({message:"incorrect password"})
     }
   } catch (error) {
     throw new Error(error.message);

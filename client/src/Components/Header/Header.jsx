@@ -39,8 +39,8 @@ const Header = () => {
             <NavLink to="/properties">All Properties</NavLink>
             {user?.loggedin ? (
               <>
-                <NavLink to="/agent" target="_blank">
-                  <u>{user?.name}</u>
+                <NavLink >
+                 <h4>{user?.name}</h4>
                 </NavLink>
 
                 <NavLink>

@@ -35,6 +35,20 @@ export const createUser = async ({name,email,password}) => {
     throw error;
   }
 };
+export const userLogin = async ({email,password}) => {
+
+  try {
+    const user =  await api.post("/user/login", { email,password })
+   if(user.data.user){
+     return user.data.user
+   }else{
+    toast.error(user.data.message)
+   }
+  } catch (error) {
+    toast.error("something went wrong");
+    throw error;
+  }
+};
 export const createAgent = async (user) => {
   try {
     await api.post("/agent/agentSingUp", { user });
