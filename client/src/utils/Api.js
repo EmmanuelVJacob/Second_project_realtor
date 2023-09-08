@@ -49,11 +49,11 @@ export const userLogin = async ({email,password}) => {
     throw error;
   }
 };
-export const createAgent = async (user) => {
-  try {
-    await api.post("/agent/agentSingUp", { user });
-  } catch (error) {
-    toast.error("something went wrong");
-    throw error;
-  }
-};
+// export const createAgent = async (user) => {
+//   try {
+//     await api.post("/agent/agentSingUp", { user });
+//   } catch (error) {
+//     toast.error("something went wrong");
+//     throw error;
+//   }
+// };

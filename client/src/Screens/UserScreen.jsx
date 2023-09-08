@@ -8,7 +8,6 @@ const UserScreen = () => {
     <div>
       <Header />
       <Hero />
-
       <Properties />
     </div>
   );

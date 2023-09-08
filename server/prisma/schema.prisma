@@ -26,7 +26,8 @@ model Agent {
     id              String       @id @default(auto()) @map("_id") @db.ObjectId
     name            String
     email           String       @unique
-    phone           Int
+    password        String
+    phone           Int?
     image           String?
     bookedVisits    Json[]
     address         String?

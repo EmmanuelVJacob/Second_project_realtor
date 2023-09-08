@@ -11,9 +11,7 @@ import {ReactQueryDevtools} from 'react-query/devtools'
 import AgentScreen from "./Screens/AgentScreen";
 import UserLogin from "./Screens/UserLoginScreen/UserLogin";
 import UserSignUpScreen from "./Screens/UserSignUpScreen/UserSignUpScreen";
-import {Provider} from 'react-redux'
-import UserStore from "./Store/UserStore";
-
+import AgnetSignupScreen from "./Screens/AgentSignupScreen/AgnetSignupScreen";
 function App() {
 
   const queryClient = new QueryClient();
@@ -21,7 +19,6 @@ function App() {
     <BrowserRouter>
        
 
-    <Provider store={UserStore}>
             <QueryClientProvider client={queryClient}>
               <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
@@ -33,7 +30,6 @@ function App() {
               </Suspense>
       < ReactQueryDevtools initialIsOpen={false}/>
             </QueryClientProvider>
-    </Provider>
     
      
        
@@ -41,6 +37,7 @@ function App() {
         <QueryClientProvider client={new QueryClient()}>
           <Routes>
             <Route path="/agent" element={<AgentScreen />} />
+            <Route path="/agent/login" element={<AgnetSignupScreen/>}/>
           </Routes>
         </QueryClientProvider>
      

@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import { prisma } from "../config/prismaConfig.js";
 import bcrypt from "bcryptjs";
 export const createAgent = asyncHandler(async (req, res) => {
+  console.log('hi')
   let { email, password, name } = req.body;
   console.log(req.body,'sdkjfslkjf')
   try {
@@ -12,7 +13,7 @@ export const createAgent = asyncHandler(async (req, res) => {
       const strPassword = password.toString()
       const passwordHash = await bcrypt.hash(strPassword, salt);
 
-      const agent1 = await prisma.User.create({
+      const agent1 = await prisma.Agent.create({
         data: { email, password: passwordHash, name },
       });
       res.status(201).send({
