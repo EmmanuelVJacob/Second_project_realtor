@@ -13,6 +13,8 @@ import UserLogin from "./Screens/UserLoginScreen/UserLogin";
 import UserSignUpScreen from "./Screens/UserSignUpScreen/UserSignUpScreen";
 import AgnetSignupScreen from "./Screens/AgentSignupScreen/AgnetSignupScreen";
 import AgentLoginScreen from "./Screens/AgentLoginScreen/AgentLoginScreen";
+import AdminLoginScreen from "./Screens/AdminLoginScreen/AdminLoginScreen";
+import AdminHomeScreen from "./Screens/AdminHomeScreen/AdminHomeScreen";
 function App() {
 
   const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ function App() {
                   <Route path="/agent" element={<AgentScreen />} />
             <Route path="/agent/login" element={<AgentLoginScreen/>}/>
             <Route path="/agent/signup" element={<AgnetSignupScreen/>}/>
+            <Route path="/admin/login" element={<AdminLoginScreen/>}/>
+            <Route path="/admin" element={<AdminHomeScreen/>}/>
                 </Routes>
               </Suspense>
       < ReactQueryDevtools initialIsOpen={false}/>

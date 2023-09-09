@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Header.css";
 
 import UserMenu from "../UserMenu/UserMenu";
@@ -28,7 +28,7 @@ const Header = () => {
     <section className="h-wrapper">
       <div className="flexCenter paddings innerWidth h-container">
         <Link to="/">
-          <img src="./logo-1.png" alt="logo image" className="icon" />
+          <img src="../../../../public/logo-1.png" alt="logo image" className="icon" />
         </Link>
         <OutsideClickHandler
           onOutsideClick={() => {
