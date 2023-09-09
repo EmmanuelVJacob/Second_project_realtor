@@ -104,7 +104,7 @@ const AgentSignUp = () => {
             <p className="secondaryText">
               {" "}
               already a member ?{" "}
-              <NavLink to="/login">
+              <NavLink to="/agent/login">
                 <u>log in</u>
               </NavLink>{" "}
             </p>

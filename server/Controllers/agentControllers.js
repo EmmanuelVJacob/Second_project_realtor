@@ -28,7 +28,8 @@ export const createAgent = asyncHandler(async (req, res) => {
   }
 });
 
-export const loginAgent = asyncHandler(async (req, res) => {
+export const agentLogin = asyncHandler(async (req, res) => {
+  console.log('emmman')
   const { email, password } = req.body;
   try {
     const agent = await prisma.Agent.findUnique({ where: { email } });

@@ -21,3 +21,18 @@ export const createAgent = async ({name,email,password}) => {
       throw error;
     }
   };
+
+  export const agentLogin = async ({email,password}) => {
+    try {
+      const agent =  await agentApi.post("/login", { email,password })
+      console.log(agent)
+     if(agent.data.agent){
+       return agent.data.agent
+     }else{
+      toast.error(agent.data.message)
+     }
+    } catch (error) {
+      toast.error("something went wrong");
+      throw error;
+    }
+  };

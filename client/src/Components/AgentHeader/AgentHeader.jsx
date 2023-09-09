@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./AgentHeader.css";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { selectAgent, logout } from "../../Features/agentSlice";
 import { Link, NavLink } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
 const AgentHeader = () => {
+  const dispatch = useDispatch();
+
   const agent_ = useSelector(selectAgent);
   console.log(agent_, "wowowowo");
   const [menuOpened, setMenuOpened] = useState(false);
@@ -16,7 +19,10 @@ const AgentHeader = () => {
       return { right: !menuOpened && "-100%" };
     }
   };
-
+  const handleLogout = (e) => {
+    console.log('hello')
+    dispatch(logout());
+  };
   return (
     <section className="h-wrapper1">
       <div className="flexCenter paddings innerWidth h-container">
@@ -33,9 +39,29 @@ const AgentHeader = () => {
           }}
         >
           <div className="flexCenter h-menu" style={getMenuStype(menuOpened)}>
-            <NavLink to="/agent/login">
-              <button className="button">login</button>
-            </NavLink>
+          {agent_?.loggedin ? (
+              <>
+                <NavLink >
+                 <h4>{agent_?.name}</h4>
+                </NavLink>
+
+                <NavLink>
+                  <button onClick={(e) => handleLogout(e)} className="button">
+                    logout
+                  </button>
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to="/" target="_blank">
+                  <u>login as client?</u>
+                </NavLink>
+
+                <NavLink to="/agent/login">
+                  <button className="button">login</button>
+                </NavLink>
+              </>
+            )}
           </div>
         </OutsideClickHandler>
         <div
