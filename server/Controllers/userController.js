@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { prisma } from "../config/prismaConfig.js";
 import bcrypt from "bcryptjs";
+import {generateToken} from "../utils/jsonWebTokens.js";
 export const createUser = asyncHandler(async (req, res) => {
   let { email, password, name } = req.body;
   try {
@@ -37,7 +38,9 @@ export const loginUser = asyncHandler(async (req, res) => {
     const strPassword = password.toString()
     const passwordMatch = await bcrypt.compare(strPassword, user.password);
     if (passwordMatch) {
-      res.status(200).send({message:"user successfully logged in",user})
+      console.log(user.id)
+      const token  = generateToken(user.id.toString())
+      res.status(200).send({message:"user successfully logged in",user,token})
     } else {
       res.status(200).send({message:"incorrect password"})
     }

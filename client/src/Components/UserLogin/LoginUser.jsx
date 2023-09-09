@@ -33,7 +33,12 @@ const LoginUser = () => {
       toast.error("Enter a valid password");
       return;
     }
-    let user = await userLogin({email,password})
+    let user1 = await userLogin({email,password})
+    const user = user1.user
+    const token = user1.token
+    console.log(user,'useruser')
+  if(user1){
+    localStorage.setItem("token",token)
     dispatch(
       login({
         name: user.name,
@@ -43,6 +48,7 @@ const LoginUser = () => {
       })
     );
     navigate(-1);
+  }
   }
    
   return (

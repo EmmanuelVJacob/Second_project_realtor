@@ -21,6 +21,7 @@ const Header = () => {
     }
   };
   const handleLogout = (e) => {
+    localStorage.removeItem("token");
     dispatch(logout());
   };
 

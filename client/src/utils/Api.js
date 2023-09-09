@@ -40,7 +40,7 @@ export const userLogin = async ({email,password}) => {
   try {
     const user =  await api.post("/user/login", { email,password })
    if(user.data.user){
-     return user.data.user
+     return user.data
    }else{
     toast.error(user.data.message)
    }
