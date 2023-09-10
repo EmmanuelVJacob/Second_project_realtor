@@ -26,7 +26,7 @@ export const createUser = async ({name,email,password}) => {
    const newuser =  await api.post("/user/register", { name,email,password })
    if(newuser.data.user1){
 
-     return newuser.data.user1
+     return newuser.data
    }else{
     toast.error(newuser.data.message)
    }

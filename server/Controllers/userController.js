@@ -15,9 +15,10 @@ export const createUser = asyncHandler(async (req, res) => {
       const user1 = await prisma.User.create({
         data: { email, password: passwordHash, name },
       });
+      const token = generateToken(user1.id)
       res.status(201).send({
         message: "User Created Successfully",
-        user1,
+        user1,token
       });
     } else {
       res.status(200).send({ message: "user already registered" });

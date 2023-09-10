@@ -41,7 +41,10 @@ const UserSignUp = () => {
       toast.error("Passwords do not match");
       return;
     }
-    let newUser = await createUser({ name: userName, email, password });
+    let newUser1 = await createUser({ name: userName, email, password });
+    const newUser = newUser1.user1
+    const token = newUser1.token
+    localStorage.setItem("token",token)
     dispatch(
       login({
         name: newUser.name,
