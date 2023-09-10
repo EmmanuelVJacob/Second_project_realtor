@@ -33,7 +33,6 @@ const AdminLogin = () => {
         //   return;
         // }
         let admin = await adminLogin({email,password})
-        console.log(admin,'admon')
         if(admin){
             dispatch(
                 login({

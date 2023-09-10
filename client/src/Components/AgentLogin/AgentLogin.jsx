@@ -34,7 +34,10 @@ const AgentLogin = () => {
           toast.error("Enter a valid password");
           return;
         }
-        let user = await agentLogin({email,password})
+        let agent = await agentLogin({email,password})
+        let user = agent.agent
+        let token = agent.token
+        localStorage.setItem("AgentToken",token)
         dispatch(
           login({
             name: user.name,

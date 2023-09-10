@@ -12,7 +12,7 @@ export const createAgent = async ({name,email,password}) => {
     try {
      const newAgent =  await agentApi.post("/agentSingUp", { name,email,password },{headers:{"jwt_access_to":localStorage.getItem("token")}})
      if(newAgent.data.agent1){
-       return newAgent.data.agent1
+       return newAgent.data
      }else{
       toast.error(newAgent.data.message)
      }
@@ -25,9 +25,8 @@ export const createAgent = async ({name,email,password}) => {
   export const agentLogin = async ({email,password}) => {
     try {
       const agent =  await agentApi.post("/login", { email,password })
-      console.log(agent)
      if(agent.data.agent){
-       return agent.data.agent
+       return agent.data
      }else{
       toast.error(agent.data.message)
      }

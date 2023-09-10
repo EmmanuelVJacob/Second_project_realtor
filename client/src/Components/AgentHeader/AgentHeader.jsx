@@ -11,7 +11,6 @@ const AgentHeader = () => {
   const dispatch = useDispatch();
 
   const agent_ = useSelector(selectAgent);
-  console.log(agent_, "wowowowo");
   const [menuOpened, setMenuOpened] = useState(false);
 
   const getMenuStype = (menuOpened) => {
@@ -20,7 +19,7 @@ const AgentHeader = () => {
     }
   };
   const handleLogout = (e) => {
-    console.log('hello')
+    localStorage.removeItem("AgentToken")
     dispatch(logout());
   };
   return (
