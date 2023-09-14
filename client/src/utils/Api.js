@@ -20,30 +20,43 @@ export const getAllProperties = async () => {
   }
 };
 
-export const createUser = async ({name,email,password}) => {
-
+export const createUser = async ({ name, email, password }) => {
   try {
-   const newuser =  await api.post("/user/register", { name,email,password })
-   if(newuser.data.user1){
-
-     return newuser.data
-   }else{
-    toast.error(newuser.data.message)
-   }
+    const newuser = await api.post("/user/register", { name, email, password });
+    if (newuser.data.user1) {
+      return newuser.data;
+    } else {
+      toast.error(newuser.data.message);
+    }
   } catch (error) {
     toast.error("something went wrong");
     throw error;
   }
 };
-export const userLogin = async ({email,password}) => {
 
+export const verifyOtp = async({UserOtp})=>{
   try {
-    const user =  await api.post("/user/login", { email,password })
-   if(user.data.user){
-     return user.data
-   }else{
-    toast.error(user.data.message)
-   }
+    const newuser = await api.post('/user/otp',{UserOtp})
+    if (newuser.data.user1) {
+      return newuser.data;
+    } else {
+      toast.error(newuser.data.message);
+    }
+    
+  } catch (error) {
+    toast.error('something went wrong')
+    throw error
+  }
+}
+
+export const userLogin = async ({ email, password }) => {
+  try {
+    const user = await api.post("/user/login", { email, password });
+    if (user.data.user) {
+      return user.data;
+    } else {
+      toast.error(user.data.message);
+    }
   } catch (error) {
     toast.error("something went wrong");
     throw error;

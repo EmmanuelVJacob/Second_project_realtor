@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./UserSignUp.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { createUser } from "../../utils/Api";
-import { useDispatch } from "react-redux";
-import { login } from "../../Features/UserSlice";
 import { toast } from "react-toastify";
 
 const UserSignUp = () => {
@@ -11,7 +9,6 @@ const UserSignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [email, setEmail] = useState("");
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isValidEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -42,6 +39,10 @@ const UserSignUp = () => {
       return;
     }
     let newUser1 = await createUser({ name: userName, email, password });
+    console.log(newUser1,'newuser1')
+    if(newUser1){
+      navigate('/userOtp')
+    }
     const newUser = newUser1.user1
     const token = newUser1.token
     localStorage.setItem("token",token)
@@ -53,7 +54,6 @@ const UserSignUp = () => {
         loggedin: true,
       })
     );
-    navigate(-2);
   };
 
   return (

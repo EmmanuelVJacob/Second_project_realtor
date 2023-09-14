@@ -1,27 +1,80 @@
 import asyncHandler from "express-async-handler";
 import { prisma } from "../config/prismaConfig.js";
+import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
-import {generateToken} from "../utils/jsonWebTokens.js";
+import { generateToken } from "../utils/jsonWebTokens.js";
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "realtorwebsite54@gmail.com",
+    pass: "wlvy xwhg szed mhhi",
+  },
+});
+let globalEmail;
+let globalPassword;
+let globalName;
+let otp;
+
 export const createUser = asyncHandler(async (req, res) => {
   let { email, password, name } = req.body;
   try {
     const userExits = await prisma.User.findUnique({ where: { email } });
     if (!userExits) {
-      const saltRounds = 5;
-      const salt = await bcrypt.genSalt(saltRounds);
-      const strPassword = password.toString()
-      const passwordHash = await bcrypt.hash(strPassword, salt);
+      otp = parseInt((Math.random() * 1000000).toString(), 10);
 
-      const user1 = await prisma.User.create({
-        data: { email, password: passwordHash, name },
-      });
-      const token = generateToken(user1.id)
-      res.status(201).send({
-        message: "User Created Successfully",
-        user1,token
+      const mailOptions = {
+        from: "realtorwebsite54@gmail.com",
+        to: email,
+        subject: "Sending Email using Node.js",
+        html:
+          "<h3>OTP for account verification is </h3>" +
+          "<h1 style='font-weight:bold;'>" +
+          otp +
+          "</h1>",
+        text: "That was easy!",
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log("Verification sent to your email");
+          globalEmail = email;
+          globalName = name;
+          globalPassword = password;
+          const user1 = { globalEmail, globalName, globalPassword };
+          res.status(200).json({ user1 });
+        }
       });
     } else {
       res.status(200).send({ message: "user already registered" });
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
+export const verifyOtp = asyncHandler(async (req, res) => {
+  const { UserOtp } = req.body;
+  const intOtp = parseInt(UserOtp);
+  try {
+    if (intOtp === otp) {
+      const saltRounds = 5;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const strPassword = globalPassword.toString();
+      const passwordHash = await bcrypt.hash(strPassword, salt);
+
+      const user1 = await prisma.User.create({
+        data: { email: globalEmail, password: passwordHash, name: globalName },
+      });
+      const token = generateToken(user1.id);
+      res.status(201).send({
+        message: "User Created Successfully",
+        user1,
+        token,
+      });
+    } else {
+      res.send({ message: "incorrect otp" });
     }
   } catch (error) {
     throw new Error(error.message);
@@ -33,17 +86,18 @@ export const loginUser = asyncHandler(async (req, res) => {
   try {
     const user = await prisma.User.findUnique({ where: { email } });
     if (!user) {
-      res.status(200).send({message:"no user found"})
-      
+      res.status(200).send({ message: "no user found" });
     }
-    const strPassword = password.toString()
+    const strPassword = password.toString();
     const passwordMatch = await bcrypt.compare(strPassword, user.password);
     if (passwordMatch) {
-      console.log(user.id)
-      const token  = generateToken(user.id.toString())
-      res.status(200).send({message:"user successfully logged in",user,token})
+      console.log(user.id);
+      const token = generateToken(user.id.toString());
+      res
+        .status(200)
+        .send({ message: "user successfully logged in", user, token });
     } else {
-      res.status(200).send({message:"incorrect password"})
+      res.status(200).send({ message: "incorrect password" });
     }
   } catch (error) {
     throw new Error(error.message);
