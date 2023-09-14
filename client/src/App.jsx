@@ -16,6 +16,7 @@ import AgentLoginScreen from "./Screens/AgentLoginScreen/AgentLoginScreen";
 import AdminLoginScreen from "./Screens/AdminLoginScreen/AdminLoginScreen";
 import AdminHomeScreen from "./Screens/AdminHomeScreen/AdminHomeScreen";
 import UserOtpScreen from "./Screens/UserOtpScreen/UserOtpScreen";
+import AgentOtpScreen from "./Screens/AgentOtpScreen/AgentOtpScreen";
 function App() {
 
   const queryClient = new QueryClient();
@@ -34,7 +35,9 @@ function App() {
                   <Route path="/agent" element={<AgentScreen />} />
             <Route path="/agent/login" element={<AgentLoginScreen/>}/>
             <Route path="/agent/signup" element={<AgnetSignupScreen/>}/>
+            <Route path="/agent/agentotp" element={<AgentOtpScreen/>}/>
             <Route path="/admin/login" element={<AdminLoginScreen/>}/>
+            
             <Route path="/admin" element={<AdminHomeScreen/>}/>
                 </Routes>
               </Suspense>

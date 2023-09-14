@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 // import { login } from "../../Features/UserSlice";
 import { toast } from "react-toastify";
 import { createAgent } from "../../utils/agentApi";
-import { login } from "../../Features/agentSlice";
+// import { login } from "../../Features/agentSlice";
 
 const AgentSignUp = () => {
   const [userName, setUserName] = useState("");
@@ -27,7 +27,6 @@ const AgentSignUp = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(email, password, userName, "i");
     if (!isValidEmail(email)) {
       toast.error("invalid email");
       return;
@@ -44,18 +43,21 @@ const AgentSignUp = () => {
       return;
     }
     let newAgent1 = await createAgent({ name: userName, email, password });
-    const newAgent = newAgent1.agent1;
-    const token = newAgent1.token;
-    localStorage.setItem("AgentToken", token);
-    dispatch(
-      login({
-        name: newAgent.name,
-        email: newAgent.email,
-        password: newAgent.password,
-        loggedin: true,
-      })
-    );
-    navigate(-2);
+    // const newAgent = newAgent1.agent1;
+    // const token = newAgent1.token;
+    // localStorage.setItem("AgentToken", token);
+    // dispatch(
+    //   login({
+    //     name: newAgent.name,
+    //     email: newAgent.email,
+    //     password: newAgent.password,
+    //     loggedin: true,
+    //   })
+    // );
+    // navigate(-2);
+    if(newAgent1){
+      navigate('/agent/agentotp')
+    }
   };
 
   return (
