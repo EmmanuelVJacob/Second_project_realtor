@@ -7,9 +7,10 @@ import { selectAgent, logout } from "../../Features/agentSlice";
 import { Link, NavLink } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
+import AddPropertyModal from "../AddPropertyModal/AddPropertyModal";
 const AgentHeader = () => {
   const dispatch = useDispatch();
-
+  const [modalOpened, setModalOpened] = useState(false);
   const agent_ = useSelector(selectAgent);
   const [menuOpened, setMenuOpened] = useState(false);
 
@@ -19,9 +20,12 @@ const AgentHeader = () => {
     }
   };
   const handleLogout = (e) => {
-    localStorage.removeItem("AgentToken")
+    localStorage.removeItem("AgentToken");
     dispatch(logout());
   };
+  const handleAddPropertyClick = ()=>{
+    setModalOpened(true)
+  }
   return (
     <section className="h-wrapper1">
       <div className="flexCenter paddings innerWidth h-container">
@@ -38,10 +42,15 @@ const AgentHeader = () => {
           }}
         >
           <div className="flexCenter h-menu" style={getMenuStype(menuOpened)}>
-          {agent_?.loggedin ? (
+            {agent_?.loggedin ? (
               <>
-                <NavLink >
-                 <h4>{agent_?.name}</h4>
+                <div onClick={handleAddPropertyClick}>Add Property</div>
+                <AddPropertyModal
+                  opened={modalOpened}
+                  setOpened={setModalOpened}
+                />
+                <NavLink>
+                  <h4>{agent_?.name}</h4>
                 </NavLink>
 
                 <NavLink>

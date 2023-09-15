@@ -952,6 +952,11 @@ vary@^1, vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+world-countries@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/world-countries/-/world-countries-4.1.1.tgz#0ea32578fc744f04dc678391ba50ee1b4bb6d4fc"
+  integrity sha512-2Vw8aRLHIRggmvM5BQsBrTHq5J8AMByksbdqQuTpxOHEgWWNMJJKdKjI6jfSBROgyTJHGm1uwQTX9d9/QhhmDw==
+
 yallist@^2.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"

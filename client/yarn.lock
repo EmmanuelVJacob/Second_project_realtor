@@ -10515,6 +10515,11 @@ workbox-window@6.6.1:
     "@types/trusted-types" "^2.0.2"
     workbox-core "6.6.1"
 
+world-countries@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/world-countries/-/world-countries-4.1.1.tgz#0ea32578fc744f04dc678391ba50ee1b4bb6d4fc"
+  integrity sha512-2Vw8aRLHIRggmvM5BQsBrTHq5J8AMByksbdqQuTpxOHEgWWNMJJKdKjI6jfSBROgyTJHGm1uwQTX9d9/QhhmDw==
+
 wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
